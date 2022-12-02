@@ -1,13 +1,82 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+* {
+  margin:  0;
+  padding: 0;
+  text-decoration: none;
+  list-style-type: none;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.imgUpload {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
+}
+
+
+.inner {
+   width: 500px;
+   padding: 50px 10px;
+   background-color: black;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   position: relative;
+   border-radius: 10px;
+   position: relative;
+   top: 20px;
+} 
+
+.inner > h5 {
+  color: white;
+  font-size: 30px !important;
+  font-weight: bold;
+}
+
+.inner > input[type="file"]{
+   position: relative;
+   top: 20px;
+   background-color: white;
+}
+
+
+.imgSection {
+  width: 50%;
+  padding: 40px 20px;
+  height: 350px;
+  background-color: black;
+  border-radius: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  top: 80px;
+  overflow: auto;
+}
+
+.imgContainer {
+  padding: 20px 20px;
+  width: 200px;
+  position: relative;
+}
+
+.imgContainer > img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.imgContainer > .cross {
+  width: 30px;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  transition: 0.1s ease-in-out;
+  cursor: pointer;
+}
+
+
+.imgContainer > .cross:hover {
+  transform: scale(1.5);
 }

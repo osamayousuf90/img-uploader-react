@@ -1,25 +1,62 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import pizza from "./assets/pizza.jpg";
+import cross from "./assets/cross.png";
+import { useState , useEffect } from 'react';
 
-function App() {
+const App = () => {
+  const [viewImg, setViewImg] = useState();
+  const [imgList, setImgList] = useState([])
+  
+
+  // handle upload
+  const handleUpload = (e) => {
+    const selectedFile = e.target.files  
+    const selectedFilesArray = Array.from(selectedFile)
+
+    const imageArray = selectedFilesArray?.map((file) => {
+      return URL.createObjectURL(file)
+    })
+    setImgList(imageArray)
+  }
+
+
+  // handle delete
+  const handleDelete = (image) => {
+    setImgList( imgList.filter((item) => item !== image))
+  }
+
+
+  
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <div className="imgUpload">
+        <div className="inner">
+          <h5>Image Upload</h5> 
+          <input name='images' onChange={ handleUpload}  accept="image/png , image/jpeg , image/webp " multiple type="file"   />
+        </div>
+
+        <div className="imgSection">
+
+          {imgList && 
+            imgList?.map((image) => {
+              return (
+                <div className="imgContainer">
+                <img onClick={() => handleDelete(image)  } src={cross} className="cross" />
+                <img src={image}  />          
+                </div> 
+              )
+            })
+           
+  
+          }
+          
+        </div>
+      </div>
+
+      {/* //  setViewImg(URL.createObjectURL(e.target.files[0]))} */}
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
