@@ -16,7 +16,7 @@ const App = () => {
     const imageArray = selectedFilesArray?.map((file) => {
       return URL.createObjectURL(file)
     })
-    setImgList(imageArray)
+    setImgList((prev) => prev.concat(imageArray) )
   }
 
 
