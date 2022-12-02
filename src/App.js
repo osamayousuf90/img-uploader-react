@@ -4,7 +4,6 @@ import cross from "./assets/cross.png";
 import { useState , useEffect } from 'react';
 
 const App = () => {
-  const [viewImg, setViewImg] = useState();
   const [imgList, setImgList] = useState([])
   
 
@@ -13,10 +12,24 @@ const App = () => {
     const selectedFile = e.target.files  
     const selectedFilesArray = Array.from(selectedFile)
 
-    const imageArray = selectedFilesArray?.map((file) => {
+    var imageArray = selectedFilesArray?.map((file) => {
       return URL.createObjectURL(file)
     })
-    setImgList((prev) => prev.concat(imageArray) )
+
+    var tempVal = [];
+    
+    imgList.forEach(element => {
+      tempVal.push({
+        url: element,
+        type : "image"
+      })
+    });
+
+
+    
+   
+    setImgList((prev) => prev.concat(imageArray))
+    
   }
 
 
@@ -25,7 +38,25 @@ const App = () => {
     setImgList( imgList.filter((item) => item !== image))
   }
 
+ const separateObject = obj => {
+    const res = [];
+   const keys = Object.keys(obj);
+    keys.forEach(key => {
+       res.push({
+         "url": obj[key],
+         "image" : "image"
+       });
+    });
+    return res;
+ };
+//  console.log(separateObject(imgList));
 
+  
+  useEffect(() => {
+    console.log("imgList ===>", imgList)
+  }, [imgList])
+  
+  
   
   
   return (
