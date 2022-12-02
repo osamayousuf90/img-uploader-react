@@ -15,6 +15,17 @@ const App = () => {
     var imageArray = selectedFilesArray?.map((file) => {
       return URL.createObjectURL(file)
     })
+
+    const res = [];
+    const keys = Object.keys(imageArray);
+     keys.forEach(key => {
+        res.push({
+          "url": imageArray[key],
+          "image" : "image"
+        });
+     });
+    
+    console.log("res ===>", res);
    
     setImgList((prev) => prev.concat(imageArray))
     
