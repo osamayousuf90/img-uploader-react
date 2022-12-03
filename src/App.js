@@ -6,24 +6,36 @@ import { useState , useEffect , useRef } from 'react';
 const App = () => {
   const [imgList, setImgList] = useState([])
   const inputRef = useRef();
+  const [stateUpdate, setStateUpdate] = useState(false);
   
 
   // handle upload
   const handleUpload = (e) => {
-  const a = inputRef.current.innerText = "Uploaded"
+      inputRef.current.innerText = "Uploading"
+    
+    
+    setTimeout(() => {
 
-    const selectedFile = e.target.files 
-    const selectedFilesArray = Array.from(selectedFile)
+      for (let i = 0; i < 500; i++) {
+        setStateUpdate( !stateUpdate )
+        const selectedFile = e.target.files 
+        const selectedFilesArray = Array.from(selectedFile)
+    
+        const imageArray = selectedFilesArray?.map((a) => {
+          const file = URL.createObjectURL(a)
+          const arrObjImg = { "url": file, type: "image" } 
+          const arrObjVideo = { "url": file, type: "video" }
+          const b = a["type"].split("/")[0] === "video" ? arrObjVideo : arrObjImg
+          return b;
+        })
+    
+        setImgList(  imgList.concat( imageArray )  )
+        
+      }
+    }, 300 )
 
-    const imageArray = selectedFilesArray?.map((a) => {
-      const file = URL.createObjectURL(a)
-      const arrObjImg = { "url": file, type: "image" } 
-      const arrObjVideo = { "url": file, type: "video" }
-      const b = a["type"].split("/")[0] === "video" ? arrObjVideo : arrObjImg
-      return b;
-    })
 
-    setImgList(  imgList.concat( imageArray )  )
+  
   }
 
 
@@ -45,7 +57,7 @@ const App = () => {
     <div>
       <div className="imgUpload">
         <div className="inner">
-          <h5 ref={inputRef} >Image & Video Uploader</h5> 
+        { imgList?.length === 0 ? <h5 ref={inputRef} >Image & Video Uploader</h5> : <h5 ref={inputRef} >Uploaded!!</h5>  }   
           <input name='images' onChange={ handleUpload}  accept="image/png , image/jpeg , image/webp , video/mp4 " multiple type="file"   />
         </div>
 
