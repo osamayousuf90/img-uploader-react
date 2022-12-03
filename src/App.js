@@ -42,7 +42,7 @@ const App = () => {
     <div>
       <div className="imgUpload">
         <div className="inner">
-          <h5>Image Upload</h5> 
+          <h5>Image & Video Uploader</h5> 
           <input name='images' onChange={ handleUpload}  accept="image/png , image/jpeg , image/webp , video/mp4 " multiple type="file"   />
         </div>
 
