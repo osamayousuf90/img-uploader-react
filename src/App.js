@@ -1,15 +1,18 @@
 import React from 'react'
 import pizza from "./assets/pizza.jpg";
 import cross from "./assets/cross.png";
-import { useState , useEffect } from 'react';
+import { useState , useEffect , useRef } from 'react';
 
 const App = () => {
   const [imgList, setImgList] = useState([])
+  const inputRef = useRef();
   
 
   // handle upload
   const handleUpload = (e) => {
-    const selectedFile = e.target.files  
+  const a = inputRef.current.innerText = "Uploaded"
+
+    const selectedFile = e.target.files 
     const selectedFilesArray = Array.from(selectedFile)
 
     const imageArray = selectedFilesArray?.map((a) => {
@@ -21,7 +24,6 @@ const App = () => {
     })
 
     setImgList(  imgList.concat( imageArray )  )
-    
   }
 
 
@@ -31,8 +33,9 @@ const App = () => {
   }
 
 
+
   useEffect(() => {
-    console.log("imgList ===>", imgList)
+    // console.log("imgList ===>", imgList)
   }, [imgList])
   
   
@@ -42,7 +45,7 @@ const App = () => {
     <div>
       <div className="imgUpload">
         <div className="inner">
-          <h5>Image & Video Uploader</h5> 
+          <h5 ref={inputRef} >Image & Video Uploader</h5> 
           <input name='images' onChange={ handleUpload}  accept="image/png , image/jpeg , image/webp , video/mp4 " multiple type="file"   />
         </div>
 
@@ -51,7 +54,7 @@ const App = () => {
           {imgList && 
             imgList?.map((image) => {
               return (
-                <div className="imgContainer">
+                <div  className="imgContainer">
                 <img onClick={() => handleDelete(image)  } src={cross} className="cross" />
                   {image?.type === "image" && <img src={image?.url} /> } 
                   {image?.type === "video" && 
