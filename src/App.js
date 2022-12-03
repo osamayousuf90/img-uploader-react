@@ -11,7 +11,7 @@ const App = () => {
 
   // handle upload
   const handleUpload = (e) => {
-      inputRef.current.innerText = "Uploading"
+      inputRef.current.innerText = "Uploading..."
     
     
     setTimeout(() => {
