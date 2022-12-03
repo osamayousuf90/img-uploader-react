@@ -12,22 +12,15 @@ const App = () => {
     const selectedFile = e.target.files  
     const selectedFilesArray = Array.from(selectedFile)
 
-    var imageArray = selectedFilesArray?.map((file) => {
-      return URL.createObjectURL(file)
+    const imageArray = selectedFilesArray?.map((a) => {
+      const file = URL.createObjectURL(a)
+      const arrObjImg = { "url": file, type: "image" } 
+      const arrObjVideo = { "url": file, type: "video" }
+      const b = a["type"].split("/")[0] === "video" ? arrObjVideo : arrObjImg
+      return b;
     })
 
-    const res = [];
-    const keys = Object.keys(imageArray);
-     keys.forEach(key => {
-        res.push({
-          "url": imageArray[key],
-          "image" : "image"
-        });
-     });
-    
-    console.log("res ===>", res);
-   
-    setImgList((prev) => prev.concat(imageArray))
+    setImgList(  imgList.concat( imageArray )  )
     
   }
 
@@ -37,20 +30,7 @@ const App = () => {
     setImgList( imgList.filter((item) => item !== image))
   }
 
- const separateObject = obj => {
-    const res = [];
-   const keys = Object.keys(obj);
-    keys.forEach(key => {
-       res.push({
-         "url": obj[key],
-         "image" : "image"
-       });
-    });
-    return res;
- };
-//  console.log(separateObject(imgList));
 
-  
   useEffect(() => {
     console.log("imgList ===>", imgList)
   }, [imgList])
@@ -63,7 +43,7 @@ const App = () => {
       <div className="imgUpload">
         <div className="inner">
           <h5>Image Upload</h5> 
-          <input name='images' onChange={ handleUpload}  accept="image/png , image/jpeg , image/webp " multiple type="file"   />
+          <input name='images' onChange={ handleUpload}  accept="image/png , image/jpeg , image/webp , video/mp4 " multiple type="file"   />
         </div>
 
         <div className="imgSection">
@@ -73,12 +53,21 @@ const App = () => {
               return (
                 <div className="imgContainer">
                 <img onClick={() => handleDelete(image)  } src={cross} className="cross" />
-                <img src={image}  />          
+                  {image?.type === "image" && <img src={image?.url} /> } 
+                  {image?.type === "video" && 
+                    <div className="video">
+                    <video
+                        autoPlay={true}
+                        loop={true}
+                    >
+                      <source src={image?.url} />
+                    </video>
+                    </div>
+                    
+                  } 
                 </div> 
               )
             })
-           
-  
           }
           
         </div>
